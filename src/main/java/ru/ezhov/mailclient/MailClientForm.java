@@ -54,7 +54,7 @@ class MailClientForm extends JDialog implements ListenerMailClient, Closeable {
 
     public MailClientForm(InitMailClientObject initMailClientObject) throws MessagingException {
         this.initMailClientObject = initMailClientObject;
-        this.icon = new ImageIcon(MailClientForm.class.getResource("/src/main/resources/res/loader.gif"));
+        this.icon = new ImageIcon(MailClientForm.class.getResource("/res/loader.gif"));
         init();
         setTitle(initMailClientObject.getTitleForm());
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);

@@ -5,6 +5,9 @@ import com.sun.mail.util.MailSSLSocketFactory;
 import javax.mail.Authenticator;
 import javax.mail.MessagingException;
 import javax.swing.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Properties;
@@ -19,7 +22,7 @@ public class DefaultMailClientTest {
     public static void main(String[] args) {
         DefaultMailClientTest defaultMailClientTest = new DefaultMailClientTest();
         //defaultMailClientTest.thAuth();
-        //defaultMailClientTest.ouAuth();
+        defaultMailClientTest.ouAuth();
     }
 
     private void thAuth() {
@@ -37,24 +40,35 @@ public class DefaultMailClientTest {
 
     private void ouAuth() {
         try {
+            Properties properties = new Properties();
+            properties.load(new FileReader(System.getProperty("user.home") + "/git-private/config/common/common.properties"));
+
             Properties props = System.getProperties();
             MailSSLSocketFactory sf = new MailSSLSocketFactory();
             sf.setTrustAllHosts(true);
             props.put("mail.imap.starttls.enable", "true");
             props.put("mail.imap.ssl.socketFactory", sf);
+            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
             //
-            props.put("mail.host", "1");
+            props.put("mail.host", properties.getProperty("mail.smtp.host"));
             props.put("mail.imap.starttls.enable", "true");
             props.put("mail.auth", "true");
             props.put("mail.mime.charset", "UTF-8");
             props.put("mail.store.protocol", "imap");
             props.put("mail.transport.protocol", "smtp");
             props.put("mail.mime.ignoreunknownencoding", "true");
-            Authenticator auth = new DefaultAuthenticator("1", "1");
+            Authenticator auth = new DefaultAuthenticator(
+                    properties.getProperty("mail.yandex.user"),
+                    properties.getProperty("mail.yandex.password")
+            );
             InitMailClientObject initMailClientObject = new InitMailClientObject(props, auth);
             buildDialog(initMailClientObject);
         } catch (GeneralSecurityException ex) {
             Logger.getLogger(DefaultMailClientTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -31,7 +31,7 @@ class AddMailActionListener implements ActionListener, ListenerMailClient {
         this.treatmentMailboxModel = treatmentMailboxModel;
         this.parentComponent = parentComponent;
         this.fileMaxSize = fileMaxSize;
-        this.icon = new ImageIcon(MailClientForm.class.getResource("/src/main/resources/res/loader.gif"));
+        this.icon = new ImageIcon(MailClientForm.class.getResource("/res/loader.gif"));
         listenerAttachments = new HashSet<>();
     }
 

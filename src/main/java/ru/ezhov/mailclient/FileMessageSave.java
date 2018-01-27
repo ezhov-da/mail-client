@@ -15,6 +15,7 @@ public class FileMessageSave {
     private boolean error;
     private Exception exception;
     private MessageFind messageFind;
+
     public FileMessageSave() {
         this.nowExt = Ext.EML;
     }
